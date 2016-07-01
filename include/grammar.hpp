@@ -6,6 +6,8 @@
 #include <random>
 #include "cloneable.hpp"
 
+namespace evo {
+
 template< typename Out , typename ...In >
 class __GPInstruction__ {
     virtual __GPInstruction__* clone() const = 0 ;
@@ -75,10 +77,10 @@ class InstructionFactory {
     InstructionFactory<Out,In...>& operator()(Terminal<Out>* t) {
         _term.push_back(GPInstr_ptr<Out,In...>(t)) ;
         _term_rnd = std::uniform_int_distribution<int>(0,_term.size()-1);
-    }
+		}
 
-    GPInstr_ptr<Out,In...> getRandomTerminal() {
-        return _term[_term_rnd(_generator)] ;
+		GPInstr_ptr<Out,In...> getRandomTerminal() {
+		return _term[_term_rnd(_generator)] ;
     }
 
     GPInstr_ptr<Out,In...> getRandomUnterm() {
@@ -93,5 +95,6 @@ private:
     std::mt19937 _generator ;
 };
 
+}// NAMESPACE EVO
 
 #endif // GRAMMAR_HPP
